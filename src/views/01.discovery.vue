@@ -107,7 +107,7 @@
         method: 'get',
         params: {
           // 获取的数据量
-          limit: 10
+          limit: 15
         }
       }).then(res => {
         // console.log(res)
