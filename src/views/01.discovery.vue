@@ -19,7 +19,7 @@
               <span class="desc">{{ item.copywriter }}</span>
             </div>
             <img :src="item.picUrl" alt="" />
-            <span class="iconfont icon-play"></span>
+            <span class="iconfont icon-play" @click="toPlaylist(item.id)"></span>
           </div>
           <p class="name">{{ item.name }}</p>
         </div>
@@ -53,7 +53,7 @@
         <div class="item" v-for="(item,index) in mvs" :key="index">
           <div class="img-wrap">
             <img :src="item.picUrl" alt="" />
-            <span class="iconfont icon-play"></span>
+            <span class="iconfont icon-play"  @click="toMV(item.id)"></span>
             <div class="num-wrap">
               <div class="iconfont icon-play"></div>
               <!-- 播放次数 -->
@@ -98,22 +98,20 @@
         method: 'get'
       }).then(res => {
         // console.log(res)
-        this.banners = res.data.banners
+        this.banners = res.data.banners.slice(0, 4)
       })
-
       // 推荐歌单
       axios({
         url: 'https://autumnfish.cn/personalized',
         method: 'get',
         params: {
           // 获取的数据量
-          limit: 15
+          limit: 10
         }
       }).then(res => {
         // console.log(res)
         this.list = res.data.result
       })
-
       // 最新音乐
       axios({
         url: 'https://autumnfish.cn/personalized/newsong',
@@ -122,7 +120,6 @@
         // console.log(res)
         this.songs = res.data.result
       })
-
       // 最新mv
       axios({
         url: 'https://autumnfish.cn/personalized/mv',
@@ -148,6 +145,15 @@
           // 设置给父组件的 播放地址
           this.$parent.musicUrl = url
         })
+      },
+       // 去mv详情页
+      toMV(id){
+        this.$router.push(`/mv?q=${id}`)
+      },
+      // 去歌单详情页
+      toPlaylist(id){
+        // 跳转并携带数据即可
+        this.$router.push(`/playlist?q=${id}`)
       }
     }
   }

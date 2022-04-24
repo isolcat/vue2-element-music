@@ -133,7 +133,7 @@
                 <span class="num">{{ item.playCount }}</span>
               </div>
               <img :src="item.coverImgUrl" alt="" />
-              <span class="iconfont icon-play"></span>
+              <span class="iconfont icon-play" @click="toPlaylist(item.id)"></span>
             </div>
             <p class="name">{{ item.name }}</p>
           </div>
@@ -228,6 +228,11 @@
           // 保存数据
           this.list = res.data.playlists
         })
+      },
+       // 去歌单详情页
+      toPlaylist(id){
+        // 跳转并携带数据即可
+        this.$router.push(`/playlist?q=${id}`)
       },
       // 页码改变事件
       handleCurrentChange(val) {
